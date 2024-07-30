@@ -7,6 +7,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ $project->name }}</div>
+                <h2 style="background: {{ $project->type->color }}">{{ $project->type->name }} </h2>
 
                 <div class="card-body">
                     <p>{{ $project->description }}</p>
