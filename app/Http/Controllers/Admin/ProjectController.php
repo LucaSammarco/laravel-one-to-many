@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 class ProjectController extends Controller
 {
     /**
@@ -27,32 +30,20 @@ class ProjectController extends Controller
     public function create()
     {
         //
-        return view('admin.projects.create');
+        $project = new Project();
+        $types = Type::all();
+        return view('admin.projects.create', compact('project', 'types'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        //
-        // dd($request->all());
-
-        $data = $request->validate([
-            'name' => 'required|string|max:255|unique:projects',
-            'description' => 'required|string',
-            'url' => 'required|url',
-            'programming_language' => 'required|string|max:255'
-        ]);
-
-
-
-
-
+        $data = $request->validated();
 
         $data["author"] = Auth::user()->name;
         $data["updated_on"] = Carbon::now();
-
         $newProject = Project::create($data);
 
         return redirect()->route('admin.projects.show', $newProject);
@@ -74,39 +65,33 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         //
-        return view('admin.projects.edit', compact('project'));
+
+        $types = Type::all();
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
-
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'url' => 'required|url',
-            'programming_language' => 'required|string|max:255'
-        ]);
+        $data = $request->validated();
+        $data['updated_on'] = Carbon::now();
 
         $project->update($data);
 
         return redirect()->route('admin.projects.show', $project);
-
     }
+
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Project $project)
     {
-        //
-
         $project->delete();
 
         return redirect()->route('admin.projects.index');
-
     }
 }

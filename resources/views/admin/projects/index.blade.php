@@ -13,7 +13,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Category</th>
+                    <th>Type</th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>URL</th>
@@ -28,7 +28,7 @@
                 @foreach($projects as $project)
                 <tr>
                     <td>{{ $project->id }}</td>
-                    {{-- <td>{{ $project->type->name }}</td> --}}
+                    <td>{{ $project->type->name }}</td>
                     <td>{{ $project->name }}</td>
                     <td>{{ $project->description }}</td>
                     <td>{{ $project->url }}</td>

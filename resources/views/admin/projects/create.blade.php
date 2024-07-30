@@ -41,6 +41,15 @@
             </div>
 
             <div class="mb-3">
+                <label for="type_id" class="form-label">Project Type</label>
+                <select class="form-select" id="type_id" name="type_id">
+                    @foreach($types as $type)
+                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="programming_language" class="form-label">Programming Language</label>
                 <input type="text" class="form-control" id="programming_language" name="programming_language" value="{{ old('programming_language') }}">
             </div>

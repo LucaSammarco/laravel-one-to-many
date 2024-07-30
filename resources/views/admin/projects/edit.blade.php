@@ -29,7 +29,16 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="url" class="form-label">Project URL</label>
+                    <label for="type_id" class="form-label">Project Type</label>
+                    <select class="form-select" id="type_id" name="type_id">
+                        @foreach($types as $type)
+                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="url" class="form-label">Project URL</label>das
                     <input type="text" class="form-control" id="url" name="url" value="{{ $project->url }}">
                 </div>
 
